@@ -1,6 +1,9 @@
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 
+// Временное хранилище для пользователей
+// Будет переписано при подключении к базе данных
+
 let users: User[] = [];
 let idCounter = 1;
 
