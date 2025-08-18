@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import userService from '../services/user.service';
+import { UserService } from '../services/user.service';
 
-export default {
+export const userController = (userService: UserService) => ({
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAll();
@@ -49,4 +49,4 @@ export default {
       next(err);
     }
   },
-};
+});

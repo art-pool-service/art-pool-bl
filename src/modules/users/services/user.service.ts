@@ -1,21 +1,23 @@
-import userRepository from '../repositories/user.repository';
+import { IUserRepository } from '../repositories/user.repository';
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 
-export default {
+export class UserService {
+  constructor(private repo: IUserRepository) {}
+
   async getAll(): Promise<User[]> {
-    return userRepository.getAll();
-  },
+    return this.repo.getAll();
+  }
   async getById(id: number): Promise<User | undefined> {
-    return userRepository.getById(id);
-  },
+    return this.repo.getById(id);
+  }
   async create(data: CreateUserDto): Promise<User> {
-    return userRepository.create(data);
-  },
+    return this.repo.create(data);
+  }
   async update(id: number, data: UpdateUserDto): Promise<User | undefined> {
-    return userRepository.update(id, data);
-  },
+    return this.repo.update(id, data);
+  }
   async remove(id: number): Promise<boolean> {
-    return userRepository.remove(id);
-  },
-};
+    return this.repo.remove(id);
+  }
+}
