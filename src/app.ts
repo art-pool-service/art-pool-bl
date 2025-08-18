@@ -1,10 +1,15 @@
 import express from 'express';
 import usersModule from './modules/users/module';
+import authModule from './modules/auth/module';
 
 const app = express();
 
 app.use(express.json());
 
+// Подключение маршрутов users
+
+// Подключение маршрутов auth
+app.use('/api/auth', authModule.routes);
 // Подключение маршрутов users
 app.use('/api', usersModule.routes);
 

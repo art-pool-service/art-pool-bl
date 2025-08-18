@@ -1,3 +1,4 @@
+
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 
@@ -20,7 +21,14 @@ export const userRepository: IUserRepository = {
     return users.find(u => u.id === id);
   },
   async create(data: CreateUserDto) {
-    const user: User = { id: idCounter++, ...data };
+    // Для регистрации пользователя нужен пароль
+    const user: User = {
+      id: idCounter++,
+      name: data.name,
+      phone: data.phone,
+      hashedPassword: (data as any).hashedPassword || '',
+    };
+
     users.push(user);
     return user;
   },
