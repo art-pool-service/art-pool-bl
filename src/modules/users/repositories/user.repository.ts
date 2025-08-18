@@ -1,31 +1,44 @@
+
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 
-// Временное хранилище для пользователей
-// Будет переписано при подключении к базе данных
+export interface IUserRepository {
+  getAll(): Promise<User[]>;
+  getById(id: number): Promise<User | undefined>;
+  create(data: CreateUserDto): Promise<User>;
+  update(id: number, data: UpdateUserDto): Promise<User | undefined>;
+  remove(id: number): Promise<boolean>;
+}
 
 let users: User[] = [];
 let idCounter = 1;
 
-export default {
-  getAll(): User[] {
+export const userRepository: IUserRepository = {
+  async getAll() {
     return users;
   },
-  getById(id: number): User | undefined {
+  async getById(id: number) {
     return users.find(u => u.id === id);
   },
-  create(data: CreateUserDto): User {
-    const user: User = { id: idCounter++, ...data };
+  async create(data: CreateUserDto) {
+    // Для регистрации пользователя нужен пароль
+    const user: User = {
+      id: idCounter++,
+      name: data.name,
+      phone: data.phone,
+      hashedPassword: (data as any).hashedPassword || '',
+    };
+
     users.push(user);
     return user;
   },
-  update(id: number, data: UpdateUserDto): User | undefined {
+  async update(id: number, data: UpdateUserDto) {
     const user = users.find(u => u.id === id);
     if (!user) return undefined;
     Object.assign(user, data);
     return user;
   },
-  remove(id: number): boolean {
+  async remove(id: number) {
     const index = users.findIndex(u => u.id === id);
     if (index === -1) return false;
     users.splice(index, 1);

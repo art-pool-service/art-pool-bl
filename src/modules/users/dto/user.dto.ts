@@ -1,9 +1,7 @@
-export interface CreateUserDto {
+export type CreateUserDto = {
   name: string;
-  email: string;
+  phone: string;
+  hashedPassword: string;
 }
 
-export interface UpdateUserDto {
-  name?: string;
-  email?: string;
-}
+export type UpdateUserDto = Partial<CreateUserDto>;
