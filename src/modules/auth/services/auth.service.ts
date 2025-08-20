@@ -4,8 +4,8 @@ import { authRepository } from '../repositories/auth.repository';
 import { LoginDto, RegisterDto } from '../dto/auth.dto';
 import { AuthPayload } from '../entities/auth.entity';
 import { User } from '../../users/entities/user.entity';
+import config from '../../../config/app.config';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 const JWT_EXPIRES_IN = '1h';
 
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(data.password, user.hashedPassword))) return null;
   
     const payload: AuthPayload = { userId: user.id, phone: user.phone };
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    return jwt.sign(payload, config.jwtSecret, { expiresIn: JWT_EXPIRES_IN });
   }
 
   async register(data: RegisterDto): Promise<User> {
