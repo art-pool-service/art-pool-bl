@@ -7,7 +7,9 @@
     "start": "node dist/main.js",
     "deploy": "pm2 start dist/main.js --name art-pool-bl --watch",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/main.ts",
-    "lint": "eslint 'src/**/*.ts'"
+    "lint": "eslint 'src/**/*.ts'",
+    "typeorm:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
+    "typeorm:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/database/data-source.ts"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +24,9 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "mqtt": "^5.14.0",
+    "pg": "^8.16.3",
     "pm2": "^6.0.8",
+    "tsconfig-paths": "^4.2.0",
     "typeorm": "^0.3.26"
   },
   "devDependencies": {
