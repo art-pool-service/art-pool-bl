@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/user.service';
+import { RoleService } from '../services/role.service';
 
-export class UserController {
-  constructor(private userService: UserService) {}
+export class RoleController {
+  constructor(private userService: RoleService) {}
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {

@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import { UserService } from '../services/user.service';
-import { userController } from '../controllers/user.controller';
+import { UserController } from '../controllers/user.controller';
 
-export default (userService: UserService) => {
-  const controller = userController(userService);
+export default (controller: UserController) => {
   const router = Router();
 
   router.get('/users', controller.getAll);

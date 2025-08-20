@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/user.service';
+import { PersonService } from '../services/person.service';
 
-export class UserController {
-  constructor(private userService: UserService) {}
+export class PersonController {
+  constructor(private userService: PersonService) {}
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
