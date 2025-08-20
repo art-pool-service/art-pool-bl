@@ -2,7 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { UserService } from '../services/user.service';
 
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    this.getAll = this.getAll.bind(this);
+    this.getById = this.getById.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.remove = this.remove.bind(this);
+  }
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {

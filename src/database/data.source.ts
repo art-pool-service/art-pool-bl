@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 
-import dbConfig from '../config/db.config';
 import { Address, Person, Role, Permission, RolesPermissions, User } from './models';
+import { dbConfig } from '../config';
 
 
 export class AppDataSource extends DataSource {
@@ -20,4 +20,3 @@ export class AppDataSource extends DataSource {
   }
 }
 
-export const appDataSource = new AppDataSource();

@@ -4,11 +4,11 @@ import { AddressController } from '../controllers/address.controller';
 export default (controller: AddressController) => {
   const router = Router();
 
-  router.get('/addresss', controller.getAll);
-  router.get('/addresss/:id', controller.getById);
-  router.post('/addresss', controller.create);
-  router.put('/addresss/:id', controller.update);
-  router.delete('/addresss/:id', controller.remove);
+  router.get('/addresses', controller.getAll);
+  router.get('/addresses/:id', controller.getById);
+  router.post('/addresses', controller.create);
+  router.put('/addresses/:id', controller.update);
+  router.delete('/addresses/:id', controller.remove);
 
   return router;
 };

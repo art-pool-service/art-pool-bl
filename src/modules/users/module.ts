@@ -1,13 +1,22 @@
+import { Router } from 'express';
+
+import { AppDataSource } from '../../database/data.source';
 import { UserSource } from './sources/user.source';
 import { UserService } from './services/user.service';
-import routes from './routes';
-import { appDataSource } from '../../database/data.source';
 import { UserController } from './controllers/user.controller';
+import routes from './routes';
 
-const userRepository = new UserSource(appDataSource);
-const userService = new UserService(userRepository);
-const userController = new UserController(userService);
 
-export default {
-  routes: routes(userController)
+class UserModule {
+  routes: Router;
+  
+  constructor(private appDataSource: AppDataSource) {
+    const userRepository = new UserSource(appDataSource);
+    const userService = new UserService(userRepository);
+    const userController = new UserController(userService);
+
+    this.routes = routes(userController);
+  }
 };
+
+export { UserModule };

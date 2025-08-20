@@ -1,8 +1,10 @@
-import app from './app';
+import { createApp } from './app';
 import { appConfig } from './config';
 
 async function bootstrap() {
-  app.listen(appConfig.port, (error) => {
+  const appInstance = await createApp();
+
+  appInstance.listen(appConfig.port, (error) => {
     if (error) {
       console.error('Error starting server:', error);
       process.exit(1);

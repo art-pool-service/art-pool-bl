@@ -1,20 +1,42 @@
 import express from 'express';
-import usersModule from './modules/users/module';
+import { AppDataSource } from './database/data.source';
+import { UserModule } from './modules/users/module';
+import { AddressModule } from './modules/addresses/module';
+import { PersonModule } from './modules/persons/module';
+import { RoleModule } from './modules/roles/module';
 
-const app = express();
+const createApp = async () => {
+  const app = express();
 
-app.use(express.json());
+  app.use(express.json());
 
-// Подключение маршрутов users
-app.use('/api', usersModule.routes);
+  const appDataSource = new AppDataSource()
+  await appDataSource.initialize();
 
-// Глобальный обработчик ошибок
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err);
-  res.status(err.status || 500).json({
-    message: err.message || 'Internal Server Error',
-    error: process.env.NODE_ENV === 'development' ? err : {},
+  const userModule = new UserModule(appDataSource);
+  const roleModule = new RoleModule(appDataSource);
+  const personModule = new PersonModule(appDataSource); 
+  const addressModule = new AddressModule(appDataSource);
+
+  // Подключение маршрутов users
+  app.use('/api', userModule.routes);
+  // Подключение маршрутов roles
+  app.use('/api', roleModule.routes);
+  // Подключение маршрутов persons
+  app.use('/api', personModule.routes);
+  // Подключение маршрутов addresses
+  app.use('/api', addressModule.routes);
+
+  // Глобальный обработчик ошибок
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error(err);
+    res.status(err.status || 500).json({
+      message: err.message || 'Internal Server Error',
+      error: process.env.NODE_ENV === 'development' ? err : {},
+    });
   });
-});
 
-export default app;
+  return app;
+};
+
+export { createApp };

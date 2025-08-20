@@ -2,12 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import { PersonService } from '../services/person.service';
 
 export class PersonController {
-  constructor(private userService: PersonService) {}
+  constructor(private addressService: PersonService) {
+    this.getAll = this.getAll.bind(this);
+    this.getById = this.getById.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.remove = this.remove.bind(this);
+  }
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await this.userService.getAll();
-      res.json(users);
+      const addresss = await this.addressService.getAll();
+      res.json(addresss);
     } catch (err) {
       next(err);
     }
@@ -15,9 +21,9 @@ export class PersonController {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.getById(Number(req.params.id));
-      if (!user) return res.status(404).json({ message: 'User not found' });
-      res.json(user);
+      const address = await this.addressService.getById(Number(req.params.id));
+      if (!address) return res.status(404).json({ message: 'Address not found' });
+      res.json(address);
     } catch (err) {
       next(err);
     }
@@ -25,8 +31,8 @@ export class PersonController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.create(req.body);
-      res.status(201).json(user);
+      const address = await this.addressService.create(req.body);
+      res.status(201).json(address);
     } catch (err) {
       next(err);
     }
@@ -34,9 +40,9 @@ export class PersonController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.update(Number(req.params.id), req.body);
-      if (!user) return res.status(404).json({ message: 'User not found' });
-      res.json(user);
+      const address = await this.addressService.update(Number(req.params.id), req.body);
+      if (!address) return res.status(404).json({ message: 'Address not found' });
+      res.json(address);
     } catch (err) {
       next(err);
     }
@@ -44,9 +50,9 @@ export class PersonController {
 
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await this.userService.remove(Number(req.params.id));
-      if (!result) return res.status(404).json({ message: 'User not found' });
-      res.json({ message: 'User deleted' });
+      const result = await this.addressService.remove(Number(req.params.id));
+      if (!result) return res.status(404).json({ message: 'Address not found' });
+      res.json({ message: 'Address deleted' });
     } catch (err) {
       next(err);
     }

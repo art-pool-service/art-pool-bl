@@ -1,14 +1,22 @@
-import routes from './routes';
-import { appDataSource } from '../../database/data.source';
-import { RoleController } from './controllers/role.controller';
-import { RoleService } from './services/role.service';
+import { Router } from 'express';
+
+import { AppDataSource } from '../../database/data.source';
 import { RoleSource } from './sources/role.source';
+import { RoleService } from './services/role.service';
+import { RoleController } from './controllers/role.controller';
+import routes from './routes';
 
 
-const roleSource = new RoleSource(appDataSource);
-const roleService = new RoleService(roleSource);
-const roleController = new RoleController(roleService);
+class RoleModule {
+  routes: Router;
 
-export default {
-  routes: routes(roleController)
+  constructor(private appDataSource: AppDataSource) {
+    const roleRepository = new RoleSource(appDataSource);
+    const roleService = new RoleService(roleRepository);
+    const roleController = new RoleController(roleService);
+
+    this.routes = routes(roleController);
+  }
 };
+
+export { RoleModule };
