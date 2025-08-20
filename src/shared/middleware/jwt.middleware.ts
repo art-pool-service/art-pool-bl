@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET: string = process.env.JWT_SECRET ?? 'dev_secret';
+import { appConfig } from '../../config';
 
 export function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
@@ -11,7 +10,7 @@ export function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 
   const token = authHeader.split(' ')[1];
   try {
-    const payload = jwt.verify(token!, JWT_SECRET);
+    const payload = jwt.verify(token!, appConfig.jwtSecret);
     if (typeof payload === 'object' && payload !== null && 'userId' in payload && 'phone' in payload) {
       (req as any).user = payload;
       next();
