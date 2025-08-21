@@ -4,6 +4,17 @@ import { Address, Person, Role, Permission, RolesPermissions, User } from './mod
 import { dbConfig } from '../config';
 import { injectable } from 'inversify';
 
+export default new DataSource({
+  type: 'postgres',
+  host: dbConfig.host,
+  port: dbConfig.port,
+  username: dbConfig.username,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  entities: [Address, Person, Role, Permission, RolesPermissions, User],
+  migrations: ['src/database/migrations/*.js'],
+  synchronize: false,
+});
 
 @injectable()
 export class AppDataSource extends DataSource {
@@ -16,9 +27,7 @@ export class AppDataSource extends DataSource {
       password: dbConfig.password,
       database: dbConfig.database,
       entities: [Address, Person, Role, Permission, RolesPermissions, User],
-      migrations: ['src/database/migrations/*.ts'],
       synchronize: false,
     });
   }
 }
-
