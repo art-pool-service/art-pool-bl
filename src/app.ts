@@ -1,9 +1,11 @@
+import 'reflect-metadata';
 import express from 'express';
 import { AppDataSource } from './database/data.source';
 import { UserModule } from './modules/users/module';
-import { AddressModule } from './modules/addresses/module';
-import { PersonModule } from './modules/persons/module';
-import { RoleModule } from './modules/roles/module';
+import { Container } from 'inversify';
+// import { AddressModule } from './modules/addresses/module';
+// import { PersonModule } from './modules/persons/module';
+// import { RoleModule } from './modules/roles/module';
 
 const createApp = async () => {
   const app = express();
@@ -13,20 +15,25 @@ const createApp = async () => {
   const appDataSource = new AppDataSource()
   await appDataSource.initialize();
 
-  const userModule = new UserModule(appDataSource);
-  const roleModule = new RoleModule(appDataSource);
-  const personModule = new PersonModule(appDataSource); 
-  const addressModule = new AddressModule(appDataSource);
+
+  const container: Container = new Container();
+  container.bind(AppDataSource).toConstantValue(appDataSource);
+
+  const userModule = new UserModule(container);
+  
+  // const roleModule = new RoleModule(appDataSource);
+  // const personModule = new PersonModule(appDataSource); 
+  // const addressModule = new AddressModule(appDataSource);
 
   // Подключение маршрутов users
   app.use('/api', userModule.routes);
   // Подключение маршрутов roles
-  app.use('/api', roleModule.routes);
+  // app.use('/api', roleModule.routes);
   // Подключение маршрутов persons
-  app.use('/api', personModule.routes);
+  // app.use('/api', personModule.routes);
   // Подключение маршрутов addresses
-  app.use('/api', addressModule.routes);
-
+  // app.use('/api', addressModule.routes);
+  
   // Глобальный обработчик ошибок
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.error(err);

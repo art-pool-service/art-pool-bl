@@ -3,9 +3,11 @@ import { AppDataSource } from '../../../database/data.source';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 import { IDataSource } from '../../../shared/interfaces';
 import { User } from '../../../database/models';
+import { inject, injectable } from 'inversify';
 
+@injectable()
 export class UserSource implements IDataSource<User, CreateUserDto, UpdateUserDto> {
-  constructor(private source: AppDataSource) {}
+  constructor(@inject(AppDataSource) private source: AppDataSource) {}
 
   async getAll(): Promise<User[]> {
     const repo = this.source.getRepository(User);

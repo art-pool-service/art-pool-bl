@@ -2,8 +2,10 @@ import { DataSource } from 'typeorm';
 
 import { Address, Person, Role, Permission, RolesPermissions, User } from './models';
 import { dbConfig } from '../config';
+import { injectable } from 'inversify';
 
 
+@injectable()
 export class AppDataSource extends DataSource {
   constructor() {
     super({

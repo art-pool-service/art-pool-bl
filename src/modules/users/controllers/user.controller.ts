@@ -1,14 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserService } from '../services/user.service';
+import { inject, injectable } from 'inversify';
 
+@injectable()
 export class UserController {
-  constructor(private userService: UserService) {
-    this.getAll = this.getAll.bind(this);
-    this.getById = this.getById.bind(this);
-    this.create = this.create.bind(this);
-    this.update = this.update.bind(this);
-    this.remove = this.remove.bind(this);
-  }
+  constructor(@inject(UserService) private userService: UserService) {}
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
