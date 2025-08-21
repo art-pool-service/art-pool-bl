@@ -1,10 +1,10 @@
 import { Router } from 'express';
-
-import { UserController } from './controllers/user.controller';
-import routes from './routes';
 import { Container } from 'inversify';
+
 import { UserSource } from './sources/user.source';
 import { UserService } from './services/user.service';
+import { UserController } from './controllers/user.controller';
+import routes from './routes';
 
 
 class UserModule {

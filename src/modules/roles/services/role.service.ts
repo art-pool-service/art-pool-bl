@@ -1,10 +1,12 @@
-import { RoleSource } from '../sources/role.source';
+import { inject, injectable } from 'inversify';
 
+import { RoleSource } from '../sources/role.source';
 import { CreateRoleDto, UpdateRoleDto } from '../dto/role.dto';
 import { Role } from '../../../database/models';
 
+@injectable()
 export class RoleService {
-  constructor(private source: RoleSource) {}
+  constructor(@inject(RoleSource) private source: RoleSource) {}
 
   async getAll(): Promise<Role[]> {
     return this.source.getAll();

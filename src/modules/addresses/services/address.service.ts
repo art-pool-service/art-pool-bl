@@ -1,10 +1,12 @@
-import { AddressSource } from '../sources/address.source';
+import { inject, injectable } from 'inversify';
 
+import { AddressSource } from '../sources/address.source';
 import { CreateAddressDto, UpdateAddressDto } from '../dto/address.dto';
 import { Address } from '../../../database/models';
 
+@injectable()
 export class AddressService {
-  constructor(private source: AddressSource) {}
+  constructor(@inject(AddressSource) private source: AddressSource) {}
 
   async getAll(): Promise<Address[]> {
     return this.source.getAll();

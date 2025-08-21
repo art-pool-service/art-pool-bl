@@ -1,6 +1,6 @@
 import { Router } from 'express';
+import { Container } from 'inversify';
 
-import { AppDataSource } from '../../database/data.source';
 import { AddressSource } from './sources/address.source';
 import { AddressService } from './services/address.service';
 import { AddressController } from './controllers/address.controller';
@@ -10,10 +10,11 @@ import routes from './routes';
 class AddressModule {
   routes: Router;
 
-  constructor(private appDataSource: AppDataSource) {
-    const addressRepository = new AddressSource(appDataSource);
-    const addressService = new AddressService(addressRepository);
-    const addressController = new AddressController(addressService);
+  constructor(container: Container) {
+    container.bind<AddressSource>(AddressSource).toSelf();
+    container.bind<AddressService>(AddressService).toSelf();
+    container.bind<AddressController>(AddressController).toSelf();
+    const addressController = container.get<AddressController>(AddressController);
 
     this.routes = routes(addressController);
   }

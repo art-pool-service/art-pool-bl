@@ -1,14 +1,11 @@
+import { inject, injectable } from 'inversify';
+
 import { Request, Response, NextFunction } from 'express';
 import { RoleService } from '../services/role.service';
 
+@injectable()
 export class RoleController {
-  constructor(private roleService: RoleService) {
-    this.getAll = this.getAll.bind(this);
-    this.getById = this.getById.bind(this);
-    this.create = this.create.bind(this);
-    this.update = this.update.bind(this);
-    this.remove = this.remove.bind(this);
-  }
+  constructor(@inject(RoleService) private roleService: RoleService) {}
   
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {

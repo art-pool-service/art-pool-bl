@@ -4,11 +4,11 @@ import { RoleController } from '../controllers/role.controller';
 export default (controller: RoleController) => {
   const router = Router();
 
-  router.get('/roles', controller.getAll);
-  router.get('/roles/:id', controller.getById);
-  router.post('/roles', controller.create);
-  router.put('/roles/:id', controller.update);
-  router.delete('/roles/:id', controller.remove);
+  router.get('/roles', (...args) => controller.getAll(...args));
+  router.get('/roles/:id', (...args) => controller.getById(...args));
+  router.post('/roles', (...args) => controller.create(...args));
+  router.put('/roles/:id', (...args) => controller.update(...args));
+  router.delete('/roles/:id', (...args) => controller.remove(...args));
 
   return router;
 };

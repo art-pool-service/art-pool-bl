@@ -1,8 +1,11 @@
+import { inject, injectable } from 'inversify';
+
 import { Request, Response, NextFunction } from 'express';
 import { PersonService } from '../services/person.service';
 
+@injectable()
 export class PersonController {
-  constructor(private addressService: PersonService) {
+  constructor(@inject(PersonService) private addressService: PersonService) {
     this.getAll = this.getAll.bind(this);
     this.getById = this.getById.bind(this);
     this.create = this.create.bind(this);

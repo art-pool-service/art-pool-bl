@@ -1,10 +1,12 @@
-import { PersonSource } from '../sources/person.source';
+import { inject, injectable } from 'inversify';
 
+import { PersonSource } from '../sources/person.source';
 import { CreatePersonDto, UpdatePersonDto } from '../dto/person.dto';
 import { Person } from '../../../database/models';
 
+@injectable()
 export class PersonService {
-  constructor(private source: PersonSource) {}
+  constructor(@inject(PersonSource) private source: PersonSource) {}
 
   async getAll(): Promise<Person[]> {
     return this.source.getAll();

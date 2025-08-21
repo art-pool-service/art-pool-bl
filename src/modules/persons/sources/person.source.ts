@@ -1,11 +1,13 @@
+import { inject, injectable } from 'inversify';
 
 import { AppDataSource } from '../../../database/data.source';
 import { IDataSource } from '../../../shared/interfaces';
 import { Person } from '../../../database/models';
 import { CreatePersonDto, UpdatePersonDto } from '../dto/person.dto';
 
+@injectable()
 export class PersonSource implements IDataSource<Person, CreatePersonDto, UpdatePersonDto> {
-  constructor(private source: AppDataSource) {}
+  constructor(@inject(AppDataSource) private source: AppDataSource) {}
 
   async getAll(): Promise<Person[]> {
     const repo = this.source.getRepository(Person);
