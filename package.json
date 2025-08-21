@@ -8,8 +8,8 @@
     "deploy": "pm2 start dist/main.js --name art-pool-bl --watch",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/main.ts",
     "lint": "eslint 'src/**/*.ts'",
-    "typeorm:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
-    "typeorm:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/database/data-source.ts"
+    "typeorm:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/database/data.source.ts",
+    "typeorm:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/database/data.source.ts"
   },
   "author": "",
   "license": "ISC",
