@@ -12,7 +12,7 @@ export default new DataSource({
   password: dbConfig.password,
   database: dbConfig.database,
   entities: [Address, Person, Role, Permission, RolesPermissions, User],
-  migrations: ['src/database/migrations/*.js'],
+  migrations: ['src/database/migrations/*.ts'],
   synchronize: false,
 });
 
