@@ -6,6 +6,7 @@ import { Container } from 'inversify';
 import { AddressModule } from './modules/addresses/module';
 import { PersonModule } from './modules/persons/module';
 import { RoleModule } from './modules/roles/module';
+import { AuthModule } from './modules/auth/auth.module';
 
 const createApp = async () => {
   const app = express();
@@ -23,6 +24,7 @@ const createApp = async () => {
   const roleModule = new RoleModule(container);
   const personModule = new PersonModule(container); 
   const addressModule = new AddressModule(container);
+  const authModule = new AuthModule(container);
 
   // Подключение маршрутов users
   app.use('/api', userModule.routes);
@@ -32,6 +34,8 @@ const createApp = async () => {
   app.use('/api', personModule.routes);
   // Подключение маршрутов addresses
   app.use('/api', addressModule.routes);
+  // Подключение маршрутов auth
+  app.use('/api', authModule.routes);
   
   // Глобальный обработчик ошибок
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

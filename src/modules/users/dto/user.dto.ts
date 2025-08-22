@@ -1,8 +1,9 @@
+import { CreatePersonDto } from "../../persons/dto/person.dto";
+
 export type CreateUserDto = {
-  name: string;
   phone: string;
   hashedPassword: string;
-  personId: number;
+  person: { id: number } | CreatePersonDto;
   roleId: number;
 }
 
