@@ -44,7 +44,7 @@ export class PersonController {
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const address = await this.addressService.update(Number(req.params.id), req.body);
-      if (!address) return res.status(404).json({ message: 'Address not found' });
+      if (!address) return res.status(404).json({ message: "Person not found" });
       res.json(address);
     } catch (err) {
       next(err);
@@ -54,8 +54,8 @@ export class PersonController {
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await this.addressService.remove(Number(req.params.id));
-      if (!result) return res.status(404).json({ message: 'Address not found' });
-      res.json({ message: 'Address deleted' });
+      if (!result) return res.status(404).json({ message: "Person not found" });
+      res.json({ message: 'Person deleted' });
     } catch (err) {
       next(err);
     }

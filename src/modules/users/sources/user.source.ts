@@ -28,6 +28,7 @@ export class UserSource implements IDataSource<User, CreateUserDto, UpdateUserDt
 
   async create(data: CreateUserDto) {
     const repo = this.source.getRepository(User);
+    console.log(data);
     const user = repo.create(data);
 
     return repo.save(user);
