@@ -10,18 +10,31 @@ import config from "../../../config/app.config";
 const SALT_ROUNDS = 10;
 const JWT_EXPIRES_IN = "1h";
 
+type LoginResultType = {
+  token: string;
+  user: {
+    userId: number;
+    phone: string;
+  };
+};
+
 injectable();
 export class AuthService {
-  constructor(@inject(UserService) private userService: UserService) {}
+  constructor(@inject(UserService) private userService: UserService) { }
 
-  async login(data: LoginDto): Promise<string | null> {
+  async login(data: LoginDto): Promise<LoginResultType | null> {
     const user = await this.userService.getByPhone(data.phone);
     if (!user || !(await bcrypt.compare(data.password, user.hashedPassword)))
       return null;
 
-    return jwt.sign({ userId: user.id, phone: user.phone }, config.jwtSecret, {
-      expiresIn: JWT_EXPIRES_IN,
-    });
+    const loginUserPayload = { userId: user.id, phone: user.phone };
+
+    return {
+      token: jwt.sign(loginUserPayload, config.jwtSecret, {
+        expiresIn: JWT_EXPIRES_IN,
+      }),
+      user: loginUserPayload
+    };
   }
 
   async register(data: RegisterDto): Promise<User | null> {
