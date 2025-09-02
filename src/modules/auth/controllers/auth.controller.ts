@@ -9,10 +9,10 @@ export class AuthController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const token = await this.authService.login(req.body);
-      if (!token)
+      const loginResult = await this.authService.login(req.body);
+      if (!loginResult)
         return res.status(401).json({ message: "Invalid credentials" });
-      res.json({ token });
+      res.json(loginResult);
     } catch (err) {
       next(err);
     }
