@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
+import helmet from 'helmet';
+
 import { AppDataSource } from './database/data.source';
 import { UserModule } from './modules/users/module';
 import { Container } from 'inversify';
@@ -12,6 +14,7 @@ const createApp = async () => {
   const app = express();
 
   app.use(express.json());
+  app.use(helmet());
 
   const appDataSource = new AppDataSource()
   await appDataSource.initialize();
