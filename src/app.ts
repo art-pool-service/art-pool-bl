@@ -16,7 +16,6 @@ const createApp = async () => {
   const appDataSource = new AppDataSource()
   await appDataSource.initialize();
 
-
   const container: Container = new Container();
   container.bind(AppDataSource).toConstantValue(appDataSource);
 
