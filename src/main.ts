@@ -14,6 +14,7 @@ async function bootstrap() {
   const options = {
     key: fs.readFileSync(appConfig.httpsKeyPath),
     cert: fs.readFileSync(appConfig.httpsCertPath),
+    ca: fs.readFileSync(appConfig.httpsCaPath),
   };
 
   const server = https.createServer(options, appInstance);
